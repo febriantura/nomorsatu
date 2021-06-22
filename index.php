@@ -109,6 +109,22 @@
       });
     });
   </script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('body').on("change","#stase",function(){
+        var id = $(this).val();
+        var data = "id="+id;
+        $.ajax({
+          type: 'POST',
+          url: "get_ujian.php",
+          data: data,
+          success: function(hasil) {
+            $("#ujian").html(hasil);
+          }
+        });
+      }); 
+    });
+  </script>
 </body>
 
 </html>
