@@ -28,6 +28,7 @@
     if (isset($_POST['cari'])) {
         $idmemo = $_POST['id_memo'];
         $mm = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM mm_memo WHERE id_memo = '$idmemo'"));
+        $s = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM dt_stase WHERE id_stase = '$mm[id_stase]'"));
         ?>
     <div class="card mb-4">
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -40,7 +41,7 @@
                 <th>NIM</th>
                 <th>NAMA</th>
                 <?php 
-                    $q_ujian = mysqli_query($koneksi, "SELECT * FROM ipt_ujian");
+                    $q_ujian = mysqli_query($koneksi, "SELECT * FROM ipt_ujian WHERE kd_stase = '$s[kd_stase]'");
                     while ($d_ujian = mysqli_fetch_array($q_ujian)){
                       echo "<th>$d_ujian[alias_ujian]</th>";
                     }
@@ -57,7 +58,7 @@
                 <td><?php echo "$d_memo[nim]"; ?></td>
                 <td><?php echo "$nama_koas[nama]"; ?></td>
                 <?php
-                  $q_ujian_2 = mysqli_query($koneksi, "SELECT * FROM ipt_ujian");
+                  $q_ujian_2 = mysqli_query($koneksi, "SELECT * FROM ipt_ujian WHERE kd_stase = '$s[kd_stase]'");
                   while ($d_ujian_2=mysqli_fetch_array($q_ujian_2)){
                     $q_nilai_2 = mysqli_query($koneksi, "SELECT * FROM ipt_nilai WHERE nim='$d_memo[nim]' AND id_ujian='$d_ujian_2[id_ujian]' AND id_stase = '$mm[id_stase]'");
                     //$sql_ewmp_2 = mysqli_query($koneksi, "SELECT * FROM t_ewmp WHERE id_user='$dpetugas[id_user]' AND id_pekan='$data_pekan_2[id_pekan]'");

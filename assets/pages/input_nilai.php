@@ -31,7 +31,7 @@
         </div>
         <div class="form-group">
           <label for="select2SinglePlaceholder">STASE</label>
-          <select class="select2 form-control" name="stase">
+          <select class="select2 form-control" name="stase" id="stase">
             <option value=""></option>
                 <?php 
                     $q_stase = mysqli_query($koneksi, "SELECT * FROM dt_stase");
@@ -55,14 +55,8 @@
         </div>
         <div class="form-group">
           <label for="select2SinglePlaceholder">JENIS UJIAN</label>
-          <select class="select2 form-control" name="ujian">
+          <select class="form-control" name="ujian" id="ujian">
             <option value=""></option>
-            <?php 
-                $q_ujian = mysqli_query($koneksi, "SELECT * FROM ipt_ujian");
-                while ($d_ujian = mysqli_fetch_array($q_ujian)) {
-                    echo "<option value=$d_ujian[id_ujian]>$d_ujian[nama_ujian]</option>";
-                }
-            ?>
           </select>
         </div>
         <div class="form-group">

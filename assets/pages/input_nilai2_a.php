@@ -27,36 +27,30 @@
           <input type="hidden" name="rs" class="form-control" value="<?php echo "$rs[id_rs]" ?>" readonly>
           <input type="hidden" name="stase" class="form-control" value="<?php echo "$stase[id_stase]" ?>" readonly>
         </div>              
-        <table class="table align-items-center">
+        <table class="table" style="font-size: 9pt;">
             <thead class="thead-light">
               <tr>
-                <th>NO</th>
-                <th>UJIAN</th>
-                <th>NILAI</th>
+                <?php
+                  $q_ujian = mysqli_query($koneksi, "SELECT * FROM ipt_ujian WHERE id_ujian NOT IN (SELECT id_ujian FROM ipt_nilai WHERE nim = '$nim_' AND id_stase = '$id_stase')  AND kd_stase = '$stase[kd_stase]'");
+                  while ($d_ujian = mysqli_fetch_array($q_ujian)) {
+                    echo "<th><center>$d_ujian[nama_ujian]<center></th>";
+                  }
+                ?>
               </tr>
             </thead>
             <tbody>
+              <tr>
               <?php
                 $no = 1;
-
-                $q_ujian = mysqli_query($koneksi, "SELECT * FROM ipt_ujian WHERE id_ujian NOT IN (SELECT id_ujian FROM ipt_nilai WHERE nim = '$nim_' AND id_stase = '$id_stase')");
+                $q_ujian = mysqli_query($koneksi, "SELECT * FROM ipt_ujian WHERE id_ujian NOT IN (SELECT id_ujian FROM ipt_nilai WHERE nim = '$nim_' AND id_stase = '$id_stase')  AND kd_stase = '$stase[kd_stase]'");
                 while ($d_ujian = mysqli_fetch_array($q_ujian)) {
+                  echo "<td><input type='text' class='form-control' name='nilai$d_ujian[id_ujian]'; ?></td>";
+                }
               ?>
-              <tr>
-                <td><?php echo "$no"; ?></td>
-                <td><?php echo "$d_ujian[nama_ujian]"; ?></td>
-                <td>
-                    <input type="text" class="form-control" name="nilai<?php echo "$d_ujian[id_ujian]"; ?>">
-                </td>
-              </tr>
-          <?php $no++; } ?>
-              <tr>
-                <td></td>
-                <td></td>
-                <td><input type="submit" name="simpan" value="simpan" class="btn btn-primary"></td>
               </tr>
             </tbody>
           </table>
+          <center><input type="submit" name="simpan" value="simpan" class="btn btn-primary"></center>
         </form>
       </div>
   <?php }} ?>
